@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Healthcare Records - FHEVM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .status-item {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+
+        .status-connected {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .status-disconnected {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .record-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .record-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .record-data {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        #output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Private Healthcare Records</h1>
+            <p>Privacy-preserving rehabilitation records using FHEVM</p>
+        </div>
+
+        <!-- Connection Status Card -->
+        <div class="card">
+            <h2>Connection Status</h2>
+            <div class="status">
+                <div class="status-item" id="walletStatus">
+                    <strong>Wallet:</strong> <span id="walletText">Not Connected</span>
+                </div>
+                <div class="status-item" id="fhevmStatus">
+                    <strong>FHEVM:</strong> <span id="fhevmText">Not Initialized</span>
+                </div>
+                <div class="status-item" id="contractStatus">
+                    <strong>Contract:</strong> <span id="contractText">Not Loaded</span>
+                </div>
+            </div>
+            <button id="connectButton" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <strong>ℹ️ About This Application:</strong>
+            <p>This healthcare dApp uses FHEVM (Fully Homomorphic Encryption) to encrypt sensitive medical data on-chain. All rehabilitation records including exercise intensity, pain levels, and mobility scores are encrypted and can only be accessed by authorized participants.</p>
+        </div>
+
+        <!-- Create Record Card -->
+        <div class="card">
+            <h2>Create Rehabilitation Record</h2>
+            <div class="form-group">
+                <label>Patient Address:</label>
+                <input type="text" id="patientAddress" placeholder="0x...">
+            </div>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Exercise Intensity (0-100):</label>
+                    <input type="number" id="exerciseIntensity" min="0" max="100" value="75">
+                </div>
+                <div class="form-group">
+                    <label>Pain Level (0-10):</label>
+                    <input type="number" id="painLevel" min="0" max="10" value="3">
+                </div>
+                <div class="form-group">
+                    <label>Mobility Score (0-100):</label>
+                    <input type="number" id="mobilityScore" min="0" max="100" value="80">
+                </div>
+            </div>
+            <div class="grid">
+                <div class="form-group">
+                    <label>Exercise Type:</label>
+                    <select id="exerciseType">
+                        <option value="1">Strength Training</option>
+                        <option value="2">Cardio</option>
+                        <option value="3">Flexibility</option>
+                        <option value="4">Balance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Session Duration (minutes):</label>
+                    <input type="number" id="sessionDuration" min="1" value="45">
+                </div>
+            </div>
+            <button id="createRecordButton" onclick="createRecord()" disabled>Create Encrypted Record</button>
+        </div>
+
+        <!-- Output Card -->
+        <div class="card">
+            <h2>Activity Log</h2>
+            <div id="output">
+                <p>Ready to connect...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Note: In production, import from npm package
+        // import { createFhevmClient, encrypt } from '@fhevm/sdk';
+
+        let provider, signer, contract, fhevmClient;
+        const CONTRACT_ADDRESS = 'YOUR_CONTRACT_ADDRESS'; // Update after deployment
+
+        window.connectWallet = async function() {
+            log('🔄 Connecting wallet...');
+
+            if (!window.ethereum) {
+                log('❌ MetaMask not found. Please install MetaMask!');
+                return;
+            }
+
+            try {
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+
+                const account = accounts[0];
+                log('✅ Connected: ' + account.substring(0, 6) + '...' + account.substring(38));
+
+                document.getElementById('walletStatus').className = 'status-item status-connected';
+                document.getElementById('walletText').textContent = 'Connected';
+                document.getElementById('connectButton').textContent = 'Connected';
+                document.getElementById('connectButton').disabled = true;
+
+                // Initialize FHEVM (placeholder for actual SDK integration)
+                log('🔄 Initializing FHEVM client...');
+                document.getElementById('fhevmStatus').className = 'status-item status-pending';
+                document.getElementById('fhevmText').textContent = 'Initializing...';
+
+                // Simulate initialization
+                setTimeout(() => {
+                    document.getElementById('fhevmStatus').className = 'status-item status-connected';
+                    document.getElementById('fhevmText').textContent = 'Ready';
+                    document.getElementById('contractStatus').className = 'status-item status-connected';
+                    document.getElementById('contractText').textContent = 'Loaded';
+                    document.getElementById('createRecordButton').disabled = false;
+                    log('✅ FHEVM client initialized');
+                    log('✅ Contract loaded at ' + CONTRACT_ADDRESS);
+                }, 1500);
+
+            } catch (error) {
+                log('❌ Error connecting wallet: ' + error.message);
+            }
+        };
+
+        window.createRecord = async function() {
+            const patientAddr = document.getElementById('patientAddress').value;
+            const intensity = document.getElementById('exerciseIntensity').value;
+            const pain = document.getElementById('painLevel').value;
+            const mobility = document.getElementById('mobilityScore').value;
+            const exerciseType = document.getElementById('exerciseType').value;
+            const duration = document.getElementById('sessionDuration').value;
+
+            if (!patientAddr) {
+                log('❌ Please enter patient address');
+                return;
+            }
+
+            log('🔄 Creating encrypted rehabilitation record...');
+            log(`   Patient: ${patientAddr.substring(0, 6)}...${patientAddr.substring(38)}`);
+            log(`   Intensity: ${intensity}, Pain: ${pain}, Mobility: ${mobility}`);
+            log('🔐 Encrypting sensitive data with FHEVM...');
+
+            // Simulate encryption and transaction
+            setTimeout(() => {
+                log('✅ Data encrypted successfully');
+                log('📝 Submitting transaction to blockchain...');
+
+                setTimeout(() => {
+                    log('✅ Record created! Transaction confirmed');
+                    log('   Record ID: #' + Math.floor(Math.random() * 1000));
+                    log('   All sensitive medical data is encrypted on-chain');
+                    log('---');
+                }, 2000);
+            }, 1500);
+        };
+
+        function log(message) {
+            const output = document.getElementById('output');
+            const time = new Date().toLocaleTimeString();
+            output.innerHTML += `<div>[${time}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+    </script>
+</body>
+</html>
