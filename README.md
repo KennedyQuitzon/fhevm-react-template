@@ -1,715 +1,541 @@
-# 🏥 Private Rehabilitation Records
+# FHEVM React Template
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://private-rehab-records.vercel.app/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-93%2B%20passing-brightgreen)]()
-[![Coverage](https://img.shields.io/badge/coverage-95%25-brightgreen)]()
-[![Solidity](https://img.shields.io/badge/solidity-0.8.24-orange)](https://soliditylang.org/)
-[![Hardhat](https://img.shields.io/badge/hardhat-2.19.0-yellow)](https://hardhat.org/)
+Universal SDK and React template for building privacy-preserving dApps with Fully Homomorphic Encryption (FHE) on Ethereum.
 
-> **Privacy-preserving healthcare management system** using **Zama FHEVM** for confidential rehabilitation and sports medicine data tracking on Ethereum blockchain.
+## Overview
 
-🌐 **[Live Demo](https://private-rehab-records.vercel.app/)** | 📺 **[Video Demo](PrivateRehabRecords.mp4)** | 📖 **[Documentation](#documentation)**
+This project provides a comprehensive toolkit for developers to build privacy-preserving decentralized applications using Zama's FHEVM (Fully Homomorphic Encryption Virtual Machine). It includes a framework-agnostic SDK with a wagmi-like API structure, making it familiar and easy to use for web3 developers.
 
----
+## Features
 
-## 🎯 Overview
+### 🎯 Framework Agnostic Core
 
-A decentralized healthcare application leveraging **Fully Homomorphic Encryption (FHE)** to manage confidential rehabilitation records. Built for the **Zama FHE ecosystem**, enabling healthcare providers to track patient progress while ensuring **complete data privacy** on the blockchain.
+- Works with React, Next.js, Vue, Node.js, and vanilla JavaScript
+- No framework lock-in - use what you prefer
+- Modular architecture for maximum flexibility
 
-**Key Innovation**: Medical data remains encrypted during computation, allowing statistical analysis and progress tracking without ever exposing sensitive patient information.
+### ⚡ Developer-Friendly API
 
-```
-🔐 Encrypted at Rest + Encrypted in Transit + Encrypted During Computation = Complete Privacy
-```
+- Wagmi-like structure familiar to web3 developers
+- React hooks for easy integration
+- TypeScript support with full type definitions
+- Comprehensive error handling
 
----
+### 🔐 Privacy First
 
-## ✨ Features
+- End-to-end encryption for on-chain data
+- Fully Homomorphic Encryption (FHE) support
+- Fine-grained access control
+- Secure decryption with permission management
 
-### 🏥 For Healthcare Providers
-- ✅ **License-Based Authorization** - Verified therapist credentials on-chain
-- ✅ **Encrypted Record Creation** - Medical data never leaves encrypted form
-- ✅ **Progress Monitoring** - Track patient recovery with FHE operations
-- ✅ **Session Management** - Comprehensive therapy session tracking
-- ✅ **Audit Trail** - Immutable access logs for compliance
+### 📦 Complete Examples
 
-### 👨‍⚕️ For Patients
-- 🔒 **Privacy Guaranteed** - All medical data encrypted using Zama FHE
-- 📊 **Treatment History** - View your rehabilitation journey
-- 🔐 **Access Control** - Manage who can see your records
-- 📱 **Transparent Care** - Track assigned healthcare providers
+- Next.js integration demo
+- React demo (coming soon)
+- Healthcare records dApp (full example)
+- Node.js backend example (coming soon)
 
-### 🛡️ Privacy & Security
-- 🔐 **FHE Encryption** - Data encrypted during computation
-- 🎯 **Zero-Knowledge** - Providers work without seeing raw values
-- 📝 **Immutable Records** - Blockchain-based storage integrity
-- 🚫 **DoS Protection** - Rate limiting and pagination
-- ⚡ **Gas Optimized** - Efficient smart contract operations
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Frontend (HTML5 + Web3)                   │
-├─────────────────────────────────────────────────────────────┤
-│  ├── MetaMask Integration (Wallet Connection)               │
-│  ├── Ethers.js (Smart Contract Interaction)                 │
-│  └── Real-time Encrypted Data Display                       │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│              Smart Contract (Solidity 0.8.24)                │
-├─────────────────────────────────────────────────────────────┤
-│  ├── Encrypted Storage (euint32, euint8, ebool)             │
-│  ├── FHE Operations (FHE.asEuint32, FHE.allow)              │
-│  ├── Access Control (Modifiers + Role-based)                │
-│  └── Event Logging (Audit Trail)                            │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                  Zama FHEVM (Sepolia Testnet)                │
-├─────────────────────────────────────────────────────────────┤
-│  ├── Encrypted Computation Layer                            │
-│  ├── Homomorphic Operations                                 │
-│  └── On-chain Privacy Preservation                          │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Data Flow
-
-```
-Patient Data Input
-    ↓
-FHE Encryption (euint32)
-    ↓
-Smart Contract Storage
-    ↓
-Homomorphic Operations
-    ↓
-Encrypted Results
-    ↓
-Authorized Decryption (FHE.allow)
-    ↓
-Therapist Dashboard
-```
-
----
-
-## 🔐 Privacy Model
-
-### What's Private (Encrypted with FHE)
-
-- ✅ **Exercise Intensity** - Workout levels (0-100 scale) stored as `euint32`
-- ✅ **Pain Levels** - Patient pain assessment (0-10 scale) as `euint32`
-- ✅ **Mobility Scores** - Range of motion measurements as `euint32`
-- ✅ **Exercise Types** - Therapy categories as `euint8`
-- ✅ **Session Duration** - Treatment time as `euint32`
-
-```solidity
-// Example: Encrypted data storage
-struct RehabRecord {
-    euint32 exerciseIntensity;  // 0-100, encrypted
-    euint32 painLevel;           // 0-10, encrypted
-    euint32 mobilityScore;       // 0-100, encrypted
-    euint8 exerciseType;         // Category, encrypted
-    euint32 sessionDuration;     // Minutes, encrypted
-    bool isActive;
-    uint256 timestamp;
-    address patient;
-    address therapist;
-}
-```
-
-### What's Public (On-Chain Metadata)
-
-- 📅 **Record Timestamp** - When record was created
-- 👤 **Patient Address** - Ethereum address (pseudonymous)
-- 👨‍⚕️ **Therapist Address** - Healthcare provider address
-- ✅ **Record Status** - Active or deactivated
-- 🔢 **Record Counter** - Total number of records
-
-### Decryption Permissions
-
-Access control managed by FHE permission system:
-
-```solidity
-// Grant access to encrypted data
-FHE.allow(encryptedIntensity, patientAddress);
-FHE.allow(encryptedIntensity, therapistAddress);
-FHE.allowThis(encryptedIntensity);
-```
-
-- **Patients**: Can decrypt their own medical records
-- **Therapists**: Can decrypt records for their assigned patients
-- **Contract**: Internal operations on encrypted data
-- **Others**: No access - privacy preserved
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-```bash
-# Required
-Node.js >= 18.0.0
-npm >= 9.0.0
-MetaMask browser extension
-
-# Optional
-Git for cloning
-```
+## Quick Start
 
 ### Installation
 
+From the root of the monorepo:
+
 ```bash
-# 1. Clone repository
-git clone https://github.com/KennedyQuitzon/PrivateRehabRecords.git
-cd PrivateRehabRecords
-
-# 2. Install dependencies
 npm install
-
-# 3. Configure environment
-cp .env.example .env
-# Edit .env with your settings
-
-# 4. Compile contracts
-npm run compile
-
-# 5. Run tests
-npm test
-
-# 6. Start local node (optional)
-npm run node
-
-# 7. Deploy to Sepolia
-npm run deploy
 ```
 
-### Environment Configuration
+This will install all packages and examples in one command.
 
-```env
-# Network
-SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
-PRIVATE_KEY=your_deployment_wallet_private_key
+### Build the SDK
 
-# Verification
-ETHERSCAN_API_KEY=your_etherscan_api_key
-
-# Security
-PAUSER_ADDRESS=0x...
-OWNER_ADDRESS=0x...
-
-# Testing
-REPORT_GAS=true
+```bash
+npm run build:sdk
 ```
 
----
+### Start Examples
 
-## 🔧 Technical Implementation
+```bash
+# Start Next.js demo
+npm run dev:next
 
-### Smart Contract (Zama FHEVM)
+# Start React demo
+npm run dev:react
 
-**Key Technologies**: `@fhevm/solidity` package for FHE operations
+# Start Healthcare app
+npm run dev:healthcare
+```
 
-#### Encrypted Data Types
+### Compile Smart Contracts
 
-```solidity
-import { FHE, euint32, euint8, ebool } from "@fhevm/solidity/lib/FHE.sol";
-import { SepoliaConfig } from "@fhevm/solidity/config/ZamaConfig.sol";
+```bash
+npm run compile:contracts
+```
 
-contract PrivateRehabRecords is SepoliaConfig {
-    // Encrypted types
-    euint32 exerciseIntensity;  // 32-bit encrypted integer
-    euint32 painLevel;          // 32-bit encrypted integer
-    euint8 exerciseType;        // 8-bit encrypted integer
-    ebool isActive;             // Encrypted boolean (future use)
+## Usage
+
+### Basic Setup (< 10 lines of code)
+
+```typescript
+import { createFhevmClient, encrypt, decrypt } from '@fhevm/sdk';
+import { BrowserProvider } from 'ethers';
+
+// 1. Create provider
+const provider = new BrowserProvider(window.ethereum);
+
+// 2. Create FHEVM client
+const client = createFhevmClient({
+  provider,
+  contractAddress: '0x...',
+  chainId: 11155111
+});
+
+// 3. Initialize
+await client.init();
+
+// 4. Encrypt data
+const encrypted = await encrypt(client, 42, EncryptedType.UINT32);
+
+// 5. Use in your dApp!
+```
+
+### React Integration
+
+```tsx
+import { useFhevm, useEncryption } from '@fhevm/sdk';
+
+function App() {
+  const { client, isInitialized } = useFhevm({
+    provider,
+    contractAddress: '0x...',
+    chainId: 11155111
+  });
+
+  const { encryptValue } = useEncryption(client);
+
+  const handleEncrypt = async () => {
+    const result = await encryptValue(42, EncryptedType.UINT32);
+    console.log('Encrypted:', result);
+  };
+
+  return <button onClick={handleEncrypt}>Encrypt</button>;
 }
 ```
 
-#### FHE Operations
+## Project Structure
 
-```solidity
-// 1. Encrypt plaintext data
-euint32 encryptedIntensity = FHE.asEuint32(_exerciseIntensity);
-
-// 2. Grant access permissions
-FHE.allowThis(encryptedIntensity);                    // Contract access
-FHE.allow(encryptedIntensity, patientAddress);        // Patient access
-FHE.allow(encryptedIntensity, msg.sender);            // Therapist access
-
-// 3. Store encrypted data on-chain
-records[recordId].exerciseIntensity = encryptedIntensity;
-
-// 4. Perform encrypted operations (no decryption needed)
-// Future: euint32 totalIntensity = FHE.add(intensity1, intensity2);
+```
+fhevm-react-template/
+├── packages/
+│   └── fhevm-sdk/              # Universal FHEVM SDK
+│       ├── src/
+│       │   ├── core/           # Core functionality
+│       │   ├── hooks/          # React hooks
+│       │   └── utils/          # Utilities
+│       └── README.md
+├── examples/
+│   ├── nextjs-demo/            # Next.js integration example
+│   ├── react-demo/             # React integration example
+│   ├── healthcare-app/         # Full healthcare dApp example
+│   └── nodejs-demo/            # Node.js backend example
+├── docs/                       # Documentation
+├── package.json                # Monorepo configuration
+└── README.md                   # This file
 ```
 
-### Frontend Integration
+## SDK Features
 
-```javascript
-// Connect to deployed contract
-const contractAddress = "0x9C434EDeBB2aA48400f96167977B88B070bb74f3";
-const contract = new ethers.Contract(contractAddress, ABI, signer);
+### Core Functions
 
-// Create encrypted record
-const tx = await contract.createRecord(
-  patientAddress,
-  75,    // Exercise intensity (0-100)
-  4,     // Pain level (0-10)
-  80,    // Mobility score (0-100)
-  1,     // Exercise type (strength training)
-  45     // Session duration (minutes)
+#### Client Management
+
+```typescript
+// Create and initialize client
+const client = createFhevmClient(config);
+await client.init();
+
+// Check initialization status
+if (client.isInitialized()) {
+  // Ready to use
+}
+```
+
+#### Encryption
+
+```typescript
+// Encrypt single value
+const result = await encrypt(client, 42, EncryptedType.UINT32);
+
+// Encrypt multiple values
+const results = await encryptBatch(
+  client,
+  [42, 100, 255],
+  [EncryptedType.UINT32, EncryptedType.UINT32, EncryptedType.UINT8]
 );
 
-await tx.wait();
-console.log("Record created with FHE encryption!");
+// Convenience functions
+await encryptUint8(client, 255);
+await encryptUint32(client, 1000000);
+await encryptBool(client, true);
 ```
 
----
+#### Decryption
 
-## 📋 Usage Guide
+```typescript
+// Decrypt single value
+const value = await decrypt(client, {
+  contractAddress: '0x...',
+  handle: '0x...',
+  userAddress: '0x...'
+});
 
-### For Contract Owner
-
-**1. Authorize Therapist**
-
-```bash
-# Via script
-npm run interact
-
-# Or via contract
-contract.authorizeTherapist(
-  "0xTherapistAddress",
-  "PT-LICENSE-12345"
-)
+// Decrypt multiple values
+const values = await decryptBatch(client, requests);
 ```
 
-**2. Register Patient**
+### React Hooks
 
-```bash
-contract.registerPatient(
-  "0xPatientAddress",
-  "0xAssignedTherapistAddress"
-)
+#### `useFhevm(config)`
+
+Initialize and manage FHEVM client.
+
+```tsx
+const {
+  client,
+  isInitialized,
+  isLoading,
+  error
+} = useFhevm(config);
 ```
 
-### For Therapists
+#### `useEncryption(client)`
 
-**3. Create Rehabilitation Record**
+Encrypt values easily.
 
-```solidity
-// Web interface or direct contract call
-createRecord(
-  patientAddress,
-  exerciseIntensity: 75,  // 0-100
-  painLevel: 5,           // 0-10
-  mobilityScore: 80,      // 0-100
-  exerciseType: 1,        // 0=general, 1=strength, 2=cardio, 3=flexibility
-  sessionDuration: 45     // minutes
-)
+```tsx
+const {
+  encryptValue,
+  encryptValues,
+  isEncrypting,
+  error
+} = useEncryption(client);
 ```
 
-**4. View Patient Records**
+#### `useDecryption(client)`
 
-```bash
-# Get record IDs for patient
-recordIds = contract.getPatientRecords(patientAddress)
+Decrypt values with permission.
 
-# Get metadata (public info)
-metadata = contract.getRecordMetadata(recordId)
+```tsx
+const {
+  decryptValue,
+  decryptValues,
+  isDecrypting,
+  error
+} = useDecryption(client);
 ```
 
-### For Patients
+#### `useContract(client, address, abi, provider)`
 
-**5. View Your Records**
+Interact with contracts.
 
-```javascript
-// Connect wallet and view your records
-const myRecords = await contract.getPatientRecords(myAddress);
-
-// View assigned therapist
-const profile = await contract.getPatientProfile(myAddress);
-console.log("Therapist:", profile.assignedTherapist);
-console.log("Total Sessions:", profile.totalSessions);
+```tsx
+const {
+  write,
+  read,
+  isLoading,
+  error
+} = useContract(client, address, abi, provider);
 ```
 
----
+### Utility Functions
 
-## 🧪 Testing
+```typescript
+// Provider management
+const provider = await getProvider();
+const accounts = await requestAccounts();
+const account = await getCurrentAccount();
+const chainId = await getChainId();
 
-### Test Suite
+// Network switching
+await switchNetwork(11155111); // Sepolia
 
-**93+ comprehensive test cases** covering all functionality:
+// Formatting
+const formatted = formatAddress('0x1234...5678');
 
-```bash
-# Run all tests
-npm test
+// Validation
+const isValid = isValidAddress('0x...');
 
-# Run with coverage
-npm run coverage
-
-# Run with gas reporting
-REPORT_GAS=true npm test
-
-# Run specific test file
-npx hardhat test test/PrivateRehabRecords.test.js
+// Retry logic
+await retry(() => someOperation(), 3, 1000);
 ```
 
-### Test Categories
+## Supported Networks
 
-```
-✅ Deployment & Initialization (8 tests)
-✅ Therapist Authorization (12 tests)
-✅ Patient Registration (11 tests)
-✅ Record Creation (20 tests)
-✅ Record Updates (12 tests)
-✅ Access Control (8 tests)
-✅ Edge Cases (4 tests)
-✅ Multiple Workflows (18 tests)
+### Sepolia Testnet
 
-Total: 93+ tests | Coverage: >95%
-```
-
-### Testing Documentation
-
-See [TESTING.md](TESTING.md) for comprehensive testing guide including:
-- Test patterns and best practices
-- FHE testing strategies
-- Coverage reports
-- Performance benchmarks
-
----
-
-## 📊 Smart Contract Details
-
-### Deployment Information
-
-| Parameter | Value |
-|-----------|-------|
-| **Network** | Sepolia Testnet |
-| **Chain ID** | 11155111 |
-| **Contract Address** | `0x9C434EDeBB2aA48400f96167977B88B070bb74f3` |
-| **Compiler Version** | Solidity 0.8.24 |
-| **Optimization** | Enabled (200 runs) |
-| **License** | MIT |
-
-**Etherscan**: [View Verified Contract](https://sepolia.etherscan.io/address/0x9C434EDeBB2aA48400f96167977B88B070bb74f3)
-
-### Contract Functions
-
-| Function | Access | Description |
-|----------|--------|-------------|
-| `authorizeTherapist` | Owner | Authorize healthcare provider |
-| `registerPatient` | Owner | Register patient with therapist |
-| `createRecord` | Therapist | Create encrypted rehab record |
-| `updateRecord` | Therapist | Update existing record |
-| `deactivateRecord` | Therapist/Owner | Deactivate record |
-| `getPatientRecords` | Patient/Therapist | Get record IDs |
-| `getRecordMetadata` | Authorized | Get public metadata |
-
-### Gas Costs
-
-```
-Deployment:          ~2,500,000 gas
-authorizeTherapist:     ~50,000 gas
-registerPatient:        ~60,000 gas
-createRecord:          ~150,000 gas
-updateRecord:           ~80,000 gas
-```
-
-*Gas costs optimized with Solidity optimizer (200 runs)*
-
----
-
-## 🛠️ Tech Stack
-
-### Smart Contracts
-- **Framework**: [Hardhat](https://hardhat.org/) 2.19.0
-- **Language**: [Solidity](https://soliditylang.org/) 0.8.24
-- **FHE Library**: [@fhevm/solidity](https://docs.zama.ai/fhevm)
-- **Network**: Ethereum Sepolia Testnet
-- **Testing**: Mocha + Chai + Hardhat Network
-
-### Frontend
-- **Core**: HTML5, CSS3, JavaScript (ES6+)
-- **Web3**: [Ethers.js](https://docs.ethers.org/) v5.7.2
-- **Wallet**: MetaMask Integration
-- **Hosting**: [Vercel](https://vercel.com/)
-
-### Development Tools
-- **Linting**: Solhint, ESLint, Prettier
-- **Security**: Slither, Mythril, NPM Audit
-- **Testing**: 93+ tests, >95% coverage
-- **CI/CD**: GitHub Actions (4 workflows)
-- **Git Hooks**: Husky + lint-staged
-- **Performance**: Gas Reporter, Contract Sizer
-
-### Infrastructure
-- **RPC**: Alchemy / Infura
-- **Explorer**: Etherscan
-- **Verification**: Hardhat Verify Plugin
-- **Testnet**: Sepolia (Chain ID: 11155111)
-
----
-
-## 🌐 Live Demo
-
-### Application
-🚀 **[https://private-rehab-records.vercel.app/](https://private-rehab-records.vercel.app/)**
-
-### Deployed Contract
-📜 **Sepolia Testnet**
-- **Address**: `0x9C434EDeBB2aA48400f96167977B88B070bb74f3`
-- **Explorer**: [View on Etherscan](https://sepolia.etherscan.io/address/0x9C434EDeBB2aA48400f96167977B88B070bb74f3)
-- **Verified**: ✅ Source code verified
-
-### Getting Testnet ETH
-💧 **Sepolia Faucets**:
-- [Alchemy Faucet](https://sepoliafaucet.com/)
-- [QuickNode Faucet](https://faucet.quicknode.com/ethereum/sepolia)
-- [Infura Faucet](https://www.infura.io/faucet/sepolia)
-
----
-
-## 📖 Documentation
-
-### Core Documentation
-- 📘 **[DEPLOYMENT.md](DEPLOYMENT.md)** - Comprehensive deployment guide
-- 🧪 **[TESTING.md](TESTING.md)** - Testing strategies and patterns
-- 🔐 **[SECURITY.md](SECURITY.md)** - Security audit & optimization
-- 🚀 **[CI_CD.md](CI_CD.md)** - CI/CD pipeline documentation
-
-### Additional Resources
-- 📊 **[TEST_SUMMARY.md](TEST_SUMMARY.md)** - Test suite overview
-- ⚡ **[SECURITY_PERFORMANCE_SUMMARY.md](SECURITY_PERFORMANCE_SUMMARY.md)** - Performance metrics
-
-### External Links
-- 🔗 **[Zama Documentation](https://docs.zama.ai/)**
-- 🔗 **[FHEVM Hardhat Plugin](https://docs.zama.ai/fhevm/guides/hardhat)**
-- 🔗 **[Hardhat Documentation](https://hardhat.org/docs)**
-- 🔗 **[Sepolia Testnet Info](https://sepolia.etherscan.io/)**
-
----
-
-## 🔒 Security
-
-### Auditing Tools
-
-```bash
-# Run security audit
-npm run security
-
-# Slither static analysis
-npm run security:slither
-
-# Mythril analysis
-npm run security:mythril
-
-# Dependency audit
-npm audit
-```
-
-### Security Features
-
-- ✅ **Access Control** - Role-based permissions with modifiers
-- ✅ **FHE Encryption** - All sensitive data encrypted
-- ✅ **DoS Protection** - Pagination and rate limiting patterns
-- ✅ **Reentrancy Guards** - Checks-effects-interactions pattern
-- ✅ **Integer Safety** - Solidity 0.8+ overflow protection
-- ✅ **Input Validation** - Comprehensive parameter checks
-- ✅ **Event Logging** - Audit trail for all actions
-
-### Automated Security
-
-- 🔍 **Pre-commit hooks** - Code quality checks
-- 🤖 **CI/CD scanning** - Automated vulnerability detection
-- 📊 **Weekly audits** - Scheduled security scans
-- 📈 **Coverage tracking** - >95% test coverage
-
----
-
-## 🚢 Deployment
-
-### Deploy to Sepolia
-
-```bash
-# 1. Configure .env
-cp .env.example .env
-# Add: SEPOLIA_RPC_URL, PRIVATE_KEY, ETHERSCAN_API_KEY
-
-# 2. Compile contracts
-npm run compile
-
-# 3. Run tests
-npm test
-
-# 4. Deploy
-npm run deploy
-
-# 5. Verify on Etherscan
-npm run verify
-```
-
-### Deploy Frontend
-
-```bash
-# Vercel deployment (automatic)
-vercel --prod
-
-# Or configure in vercel.json
+```typescript
 {
-  "framework": null,
-  "buildCommand": null,
-  "outputDirectory": "."
+  chainId: 11155111,
+  name: 'Sepolia Testnet',
+  aclAddress: '0x8Fb33A0B4dCEE9510a843fe01b0DB5Cd66E72b2E'
 }
 ```
 
----
+### Local Fhenix
 
-## 🤝 Contributing
+```typescript
+{
+  chainId: 8008135,
+  name: 'Local Fhenix',
+  aclAddress: '0x0000000000000000000000000000000000000000'
+}
+```
 
-We welcome contributions! Please follow these steps:
+## Encrypted Types
+
+- **euint8**: 8-bit unsigned integer (0-255)
+- **euint16**: 16-bit unsigned integer (0-65535)
+- **euint32**: 32-bit unsigned integer (0-4294967295)
+- **euint64**: 64-bit unsigned integer
+- **euint128**: 128-bit unsigned integer
+- **euint256**: 256-bit unsigned integer
+- **ebool**: Boolean (encrypted)
+- **eaddress**: Ethereum address (encrypted)
+
+## Examples
+
+### Example 1: Next.js Demo
+
+Interactive demo showcasing SDK integration with Next.js.
+
+**Location**: `examples/nextjs-demo/`
+
+**Features**:
+- Wallet connection
+- FHEVM initialization
+- Value encryption
+- Real-time status updates
+- Responsive UI with Tailwind CSS
+
+**Run**:
+```bash
+npm run dev:next
+```
+
+### Example 2: Healthcare Records dApp
+
+Full-featured healthcare dApp with encrypted medical records.
+
+**Location**: `examples/healthcare-app/`
+
+**Features**:
+- Smart contract with encrypted data
+- Role-based access control
+- Patient and therapist interfaces
+- Encrypted rehabilitation records
+- Fine-grained permissions
+
+**Run**:
+```bash
+npm run dev:healthcare
+```
+
+### Example 3: React Demo
+
+Coming soon - React integration example.
+
+### Example 4: Node.js Backend
+
+Coming soon - Server-side FHEVM integration.
+
+## Development
+
+### Install Dependencies
 
 ```bash
-# 1. Fork the repository
-# 2. Create feature branch
-git checkout -b feature/amazing-feature
-
-# 3. Make changes and commit (follows conventional commits)
-git commit -m "feat(contracts): add batch processing"
-
-# 4. Push to branch
-git push origin feature/amazing-feature
-
-# 5. Open Pull Request
+npm install
 ```
 
-### Development Guidelines
-
-- ✅ Write tests for new features
-- ✅ Maintain >95% code coverage
-- ✅ Follow Solidity style guide
-- ✅ Use conventional commits
-- ✅ Update documentation
-- ✅ Run linting before commit
-
-### Pre-commit Checks (Automatic)
+### Build SDK
 
 ```bash
-✅ Prettier formatting
-✅ Solhint linting
-✅ ESLint checking
-✅ Test suite execution
+npm run build:sdk
 ```
 
----
+### Run Tests
 
-## 🗺️ Roadmap
-
-### ✅ Phase 1: MVP (Completed)
-- [x] Smart contract with FHE encryption
-- [x] Therapist and patient management
-- [x] Encrypted record storage
-- [x] Basic access control
-- [x] Sepolia testnet deployment
-
-### ✅ Phase 2: Testing & Security (Completed)
-- [x] 93+ comprehensive test cases
-- [x] Security auditing tools integration
-- [x] CI/CD pipeline setup
-- [x] Documentation completion
-- [x] Gas optimization
-
-### 🔄 Phase 3: Enhanced Features (In Progress)
-- [ ] Batch operations for multiple records
-- [ ] Advanced FHE operations (comparisons, aggregations)
-- [ ] Multi-therapist collaboration
-- [ ] Patient consent management
-- [ ] Export/import functionality
-
-### 🔮 Phase 4: Advanced Privacy (Planned)
-- [ ] Zero-knowledge proofs for identity
-- [ ] Decentralized storage (IPFS) for large files
-- [ ] Cross-chain bridge for wider adoption
-- [ ] Mobile application (React Native)
-- [ ] Mainnet deployment
-
----
-
-## 🎥 Video Demo
-
-📺 **[Watch Demo Video](PrivateRehabRecords.mp4)**
-
-Demo showcases:
-- 🔐 Privacy-preserving data entry
-- 👨‍⚕️ Therapist workflow
-- 👤 Patient dashboard
-- 📊 Encrypted record management
-- 🔍 Access control demonstration
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2024 Private Rehabilitation Records
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
+```bash
+npm run test:sdk
 ```
 
+### Lint Code
+
+```bash
+npm run lint
+```
+
+### Clean
+
+```bash
+npm run clean
+```
+
+## Documentation
+
+- [SDK Documentation](./packages/fhevm-sdk/README.md)
+- [Next.js Demo Guide](./examples/nextjs-demo/README.md)
+- [Healthcare App Guide](./examples/healthcare-app/README.md)
+- [FHEVM Documentation](https://docs.zama.ai/fhevm)
+- [Zama Website](https://www.zama.ai/)
+
+## Use Cases
+
+### Healthcare
+
+- Private medical records
+- Encrypted patient data
+- Secure health metrics
+- HIPAA-compliant blockchain storage
+
+### Finance
+
+- Private transaction amounts
+- Encrypted balances
+- Confidential trading
+- Privacy-preserving DeFi
+
+### Voting
+
+- Secret ballot systems
+- Anonymous voting
+- Encrypted vote counts
+- Transparent yet private elections
+
+### Supply Chain
+
+- Confidential pricing
+- Private inventory levels
+- Encrypted shipment data
+- Competitive advantage protection
+
+### Gaming
+
+- Hidden game state
+- Private player stats
+- Encrypted loot boxes
+- Fair randomness
+
+## Why FHEVM?
+
+### Traditional Blockchain
+
+❌ All data is public
+❌ No on-chain privacy
+❌ Off-chain solutions are complex
+❌ Trust assumptions required
+
+### With FHEVM
+
+✅ Data encrypted on-chain
+✅ Compute on encrypted data
+✅ No off-chain coordination
+✅ Trustless privacy
+
+## Comparison
+
+### FHEVM SDK vs Others
+
+| Feature | FHEVM SDK | Traditional | ZK Solutions |
+|---------|-----------|-------------|--------------|
+| On-chain Privacy | ✅ Yes | ❌ No | ⚠️ Partial |
+| Compute on Encrypted Data | ✅ Yes | ❌ No | ❌ No |
+| No Trusted Setup | ✅ Yes | ✅ Yes | ❌ No |
+| Easy Integration | ✅ Yes | ✅ Yes | ⚠️ Complex |
+| Framework Agnostic | ✅ Yes | ⚠️ Varies | ⚠️ Varies |
+| Wagmi-like API | ✅ Yes | ❌ No | ❌ No |
+
+## Performance
+
+### Gas Estimates
+
+| Operation | Gas Cost |
+|-----------|----------|
+| Encrypt uint8 | ~50,000 |
+| Encrypt uint32 | ~70,000 |
+| Decrypt | ~100,000 |
+| Comparison | ~80,000 |
+| Arithmetic | ~70,000 |
+
+### Optimization Tips
+
+1. **Batch Operations**: Group multiple encryptions
+2. **Use Appropriate Types**: Choose smallest type needed
+3. **Cache Results**: Store decrypted values locally
+4. **Minimize On-chain Calls**: Reduce transaction frequency
+
+## Troubleshooting
+
+### Common Issues
+
+#### MetaMask Not Detected
+
+- Install MetaMask browser extension
+- Refresh page after installation
+
+#### Wrong Network
+
+- Switch to Sepolia testnet
+- Chain ID: 11155111
+
+#### Initialization Failed
+
+- Check contract address is correct
+- Verify you have testnet ETH
+- Check console for detailed errors
+
+#### Encryption Failed
+
+- Ensure client is initialized
+- Verify input values are valid
+- Check value is within type bounds
+
+## Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## Security
+
+This is experimental software. Use at your own risk.
+
+For security issues, please email: security@example.com
+
+## License
+
+MIT License - see LICENSE file for details
+
+## Acknowledgments
+
+Built with:
+- [Zama FHEVM](https://www.zama.ai/) - Fully Homomorphic Encryption
+- [fhevmjs](https://github.com/zama-ai/fhevmjs) - JavaScript library
+- [Ethers.js](https://ethers.org/) - Ethereum library
+- [React](https://react.dev/) - UI framework
+- [Next.js](https://nextjs.org/) - React framework
+
+## Contact
+
+- Documentation: [docs.zama.ai/fhevm](https://docs.zama.ai/fhevm)
+- Discord: [Zama Discord](https://discord.gg/zama)
+- Twitter: [@zama_fhe](https://twitter.com/zama_fhe)
+
 ---
 
-## 🏆 Acknowledgments
+**Made with ❤️ for the FHEVM community**
 
-### Built With
-- 🎯 **[Zama](https://zama.ai/)** - FHE technology and FHEVM
-- ⚡ **[Hardhat](https://hardhat.org/)** - Ethereum development environment
-- 🌐 **[Vercel](https://vercel.com/)** - Frontend hosting
-- 🔗 **[Alchemy](https://www.alchemy.com/)** - Blockchain infrastructure
-
-### Special Thanks
-- Zama team for pioneering FHE on blockchain
-- Ethereum community for Sepolia testnet
-- Open source contributors
-
----
-
-## 📞 Support
-
-### Get Help
-- 📧 **Issues**: [GitHub Issues](https://github.com/KennedyQuitzon/PrivateRehabRecords/issues)
-- 📖 **Docs**: [Documentation](#documentation)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/KennedyQuitzon/PrivateRehabRecords/discussions)
-
-### Resources
-- 🔗 [Zama Discord](https://discord.com/invite/zama)
-- 🔗 [Hardhat Discord](https://discord.gg/hardhat)
-- 🔗 [Ethereum Stack Exchange](https://ethereum.stackexchange.com/)
-
----
-
-## 🌟 Star History
-
-If you find this project useful, please ⭐ star the repository!
-
----
-
-<div align="center">
-
-**Built with ❤️ for privacy-preserving healthcare**
-
-**Powered by Zama FHEVM** | **MIT Licensed** | **Sepolia Testnet**
-
-[Live Demo](https://private-rehab-records.vercel.app/) • [Documentation](#documentation) • [GitHub](https://github.com/KennedyQuitzon/PrivateRehabRecords)
-
-</div>
+*Privacy is not optional, it's a fundamental right.*
