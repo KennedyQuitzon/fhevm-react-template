@@ -1,22 +1,34 @@
 # FHEVM React Template
 
-Universal SDK and React template for building privacy-preserving dApps with Fully Homomorphic Encryption (FHE) on Ethereum.
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/KennedyQuitzon/fhevm-react-template)
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://fhe-rehab-records.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## Overview
+> **Universal SDK and React template** for building **privacy-preserving dApps** with **Fully Homomorphic Encryption (FHE)** on Ethereum.
 
-This project provides a comprehensive toolkit for developers to build privacy-preserving decentralized applications using Zama's FHEVM (Fully Homomorphic Encryption Virtual Machine). It includes a framework-agnostic SDK with a wagmi-like API structure, making it familiar and easy to use for web3 developers.
+🔗 **[GitHub Repository](https://github.com/KennedyQuitzon/fhevm-react-template)** | 🌐 **[Live Demo](https://fhe-rehab-records.vercel.app/)** | 📺 **Demo Video: demo.mp4** (Download to view) | 📖 **[Documentation](./docs/)**
 
-## Features
+---
+
+## 🎯 Overview
+
+This project provides a comprehensive toolkit for developers to build privacy-preserving decentralized applications using **Zama's FHEVM** (Fully Homomorphic Encryption Virtual Machine). It includes a **framework-agnostic SDK** with a **wagmi-like API structure**, making it familiar and easy to use for web3 developers.
+
+**Key Innovation**: Build privacy-first dApps with less than 10 lines of code.
+
+---
+
+## ✨ Features
 
 ### 🎯 Framework Agnostic Core
 
-- Works with React, Next.js, Vue, Node.js, and vanilla JavaScript
+- Works with **React, Next.js, Vue, Node.js**, and vanilla JavaScript
 - No framework lock-in - use what you prefer
 - Modular architecture for maximum flexibility
 
 ### ⚡ Developer-Friendly API
 
-- Wagmi-like structure familiar to web3 developers
+- **Wagmi-like structure** familiar to web3 developers
 - React hooks for easy integration
 - TypeScript support with full type definitions
 - Comprehensive error handling
@@ -30,18 +42,25 @@ This project provides a comprehensive toolkit for developers to build privacy-pr
 
 ### 📦 Complete Examples
 
-- Next.js integration demo
+- **Next.js integration demo** (Required example)
+- **Healthcare records dApp** (Full production example)
 - React demo (coming soon)
-- Healthcare records dApp (full example)
 - Node.js backend example (coming soon)
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ### Installation
 
 From the root of the monorepo:
 
 ```bash
+# Clone the repository
+git clone https://github.com/KennedyQuitzon/fhevm-react-template.git
+cd fhevm-react-template
+
+# Install all dependencies
 npm install
 ```
 
@@ -59,9 +78,6 @@ npm run build:sdk
 # Start Next.js demo
 npm run dev:next
 
-# Start React demo
-npm run dev:react
-
 # Start Healthcare app
 npm run dev:healthcare
 ```
@@ -72,12 +88,14 @@ npm run dev:healthcare
 npm run compile:contracts
 ```
 
-## Usage
+---
+
+## 💻 Usage
 
 ### Basic Setup (< 10 lines of code)
 
 ```typescript
-import { createFhevmClient, encrypt, decrypt } from '@fhevm/sdk';
+import { createFhevmClient, encrypt } from '@fhevm/sdk';
 import { BrowserProvider } from 'ethers';
 
 // 1. Create provider
@@ -96,7 +114,7 @@ await client.init();
 // 4. Encrypt data
 const encrypted = await encrypt(client, 42, EncryptedType.UINT32);
 
-// 5. Use in your dApp!
+// Done! Your data is now encrypted on-chain.
 ```
 
 ### React Integration
@@ -122,7 +140,9 @@ function App() {
 }
 ```
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 fhevm-react-template/
@@ -135,15 +155,17 @@ fhevm-react-template/
 │       └── README.md
 ├── examples/
 │   ├── nextjs-demo/            # Next.js integration example
-│   ├── react-demo/             # React integration example
 │   ├── healthcare-app/         # Full healthcare dApp example
-│   └── nodejs-demo/            # Node.js backend example
+│   ├── react-demo/             # React integration example (planned)
+│   └── nodejs-demo/            # Node.js backend example (planned)
 ├── docs/                       # Documentation
 ├── package.json                # Monorepo configuration
 └── README.md                   # This file
 ```
 
-## SDK Features
+---
+
+## 🔧 SDK Features
 
 ### Core Functions
 
@@ -269,7 +291,9 @@ const isValid = isValidAddress('0x...');
 await retry(() => someOperation(), 3, 1000);
 ```
 
-## Supported Networks
+---
+
+## 🌐 Supported Networks
 
 ### Sepolia Testnet
 
@@ -291,7 +315,9 @@ await retry(() => someOperation(), 3, 1000);
 }
 ```
 
-## Encrypted Types
+---
+
+## 🔐 Encrypted Types
 
 - **euint8**: 8-bit unsigned integer (0-255)
 - **euint16**: 16-bit unsigned integer (0-65535)
@@ -302,53 +328,85 @@ await retry(() => someOperation(), 3, 1000);
 - **ebool**: Boolean (encrypted)
 - **eaddress**: Ethereum address (encrypted)
 
-## Examples
+---
 
-### Example 1: Next.js Demo
+## 📦 Examples
+
+### Example 1: Next.js Demo (Required)
 
 Interactive demo showcasing SDK integration with Next.js.
 
 **Location**: `examples/nextjs-demo/`
 
 **Features**:
-- Wallet connection
-- FHEVM initialization
-- Value encryption
+- Wallet connection (MetaMask)
+- FHEVM client initialization
+- Value encryption demo
 - Real-time status updates
 - Responsive UI with Tailwind CSS
+- TypeScript throughout
 
 **Run**:
 ```bash
 npm run dev:next
 ```
 
-### Example 2: Healthcare Records dApp
+**Learn More**: [Next.js Demo Guide](./examples/nextjs-demo/README.md)
+
+---
+
+### Example 2: Healthcare Records dApp (Full Example)
 
 Full-featured healthcare dApp with encrypted medical records.
+
+**Live Demo**: [https://fhe-rehab-records.vercel.app/](https://fhe-rehab-records.vercel.app/)
 
 **Location**: `examples/healthcare-app/`
 
 **Features**:
-- Smart contract with encrypted data
-- Role-based access control
-- Patient and therapist interfaces
+- Smart contract with FHE encryption
+- Role-based access control (Owner, Therapist, Patient)
 - Encrypted rehabilitation records
-- Fine-grained permissions
+- Patient and therapist interfaces
+- Fine-grained permission system
+- Deployed on Sepolia testnet
 
 **Run**:
 ```bash
 npm run dev:healthcare
 ```
 
+**Learn More**: [Healthcare App Guide](./examples/healthcare-app/README.md)
+
+---
+
 ### Example 3: React Demo
 
-Coming soon - React integration example.
+Coming soon - React integration example with SDK.
 
 ### Example 4: Node.js Backend
 
 Coming soon - Server-side FHEVM integration.
 
-## Development
+---
+
+## 🎥 Video Demonstration
+
+**📺 Demo Video**: `demo.mp4` (included in repository)
+
+**Important**: The demo video file must be **downloaded to your local machine** to view. Direct browser links to local files are not supported.
+
+**Demo showcases**:
+- 🔐 Quick setup (< 10 lines of code)
+- ⚡ FHEVM client initialization
+- 🔒 Value encryption with FHE
+- 👨‍⚕️ Healthcare app example
+- 📊 React hooks integration
+- 🎯 Wagmi-like API usage
+
+---
+
+## 🛠️ Development
 
 ### Install Dependencies
 
@@ -380,70 +438,71 @@ npm run lint
 npm run clean
 ```
 
-## Documentation
+---
 
-- [SDK Documentation](./packages/fhevm-sdk/README.md)
-- [Next.js Demo Guide](./examples/nextjs-demo/README.md)
-- [Healthcare App Guide](./examples/healthcare-app/README.md)
-- [FHEVM Documentation](https://docs.zama.ai/fhevm)
-- [Zama Website](https://www.zama.ai/)
+## 📖 Documentation
 
-## Use Cases
+### Core Documentation
+- 📘 **[SDK Documentation](./packages/fhevm-sdk/README.md)** - Complete SDK API reference
+- 🚀 **[Quick Start Guide](./QUICK_START.md)** - Get started in 5 minutes
+- 📖 **[Documentation](./docs/)** - Comprehensive guides
+
+### Example Guides
+- 🎯 **[Next.js Demo Guide](./examples/nextjs-demo/README.md)** - Next.js integration
+- 🏥 **[Healthcare App Guide](./examples/healthcare-app/README.md)** - Full dApp example
+
+### External Resources
+- 🔗 **[Zama FHEVM Documentation](https://docs.zama.ai/fhevm)** - Official FHEVM docs
+- 🔗 **[Zama Website](https://www.zama.ai/)** - Learn about FHE technology
+
+---
+
+## 💡 Use Cases
 
 ### Healthcare
-
 - Private medical records
 - Encrypted patient data
 - Secure health metrics
 - HIPAA-compliant blockchain storage
 
 ### Finance
-
 - Private transaction amounts
 - Encrypted balances
 - Confidential trading
 - Privacy-preserving DeFi
 
 ### Voting
-
 - Secret ballot systems
 - Anonymous voting
 - Encrypted vote counts
 - Transparent yet private elections
 
 ### Supply Chain
-
 - Confidential pricing
 - Private inventory levels
 - Encrypted shipment data
 - Competitive advantage protection
 
 ### Gaming
-
 - Hidden game state
 - Private player stats
 - Encrypted loot boxes
 - Fair randomness
 
-## Why FHEVM?
+---
 
-### Traditional Blockchain
+## 🔍 Why FHEVM?
 
-❌ All data is public
-❌ No on-chain privacy
-❌ Off-chain solutions are complex
-❌ Trust assumptions required
+### Traditional Blockchain vs FHEVM
 
-### With FHEVM
+| Feature | Traditional Blockchain | FHEVM |
+|---------|----------------------|-------|
+| Data Privacy | ❌ All data is public | ✅ Data encrypted on-chain |
+| On-chain Computation | ✅ Yes, but public | ✅ Yes, on encrypted data |
+| Off-chain Solutions | ⚠️ Complex | ✅ Not needed |
+| Trust Assumptions | ⚠️ Required for privacy | ✅ Trustless privacy |
 
-✅ Data encrypted on-chain
-✅ Compute on encrypted data
-✅ No off-chain coordination
-✅ Trustless privacy
-
-## Comparison
-
-### FHEVM SDK vs Others
+### FHEVM SDK vs Other Solutions
 
 | Feature | FHEVM SDK | Traditional | ZK Solutions |
 |---------|-----------|-------------|--------------|
@@ -454,7 +513,9 @@ npm run clean
 | Framework Agnostic | ✅ Yes | ⚠️ Varies | ⚠️ Varies |
 | Wagmi-like API | ✅ Yes | ❌ No | ❌ No |
 
-## Performance
+---
+
+## 📊 Performance
 
 ### Gas Estimates
 
@@ -473,33 +534,33 @@ npm run clean
 3. **Cache Results**: Store decrypted values locally
 4. **Minimize On-chain Calls**: Reduce transaction frequency
 
-## Troubleshooting
+---
+
+## 🐛 Troubleshooting
 
 ### Common Issues
 
 #### MetaMask Not Detected
-
 - Install MetaMask browser extension
 - Refresh page after installation
 
 #### Wrong Network
-
 - Switch to Sepolia testnet
 - Chain ID: 11155111
 
 #### Initialization Failed
-
 - Check contract address is correct
 - Verify you have testnet ETH
 - Check console for detailed errors
 
 #### Encryption Failed
-
 - Ensure client is initialized
 - Verify input values are valid
 - Check value is within type bounds
 
-## Contributing
+---
+
+## 🤝 Contributing
 
 We welcome contributions! Please:
 
@@ -509,33 +570,84 @@ We welcome contributions! Please:
 4. Add tests if applicable
 5. Submit a pull request
 
-## Security
+### Development Guidelines
+- ✅ Write tests for new features
+- ✅ Follow TypeScript best practices
+- ✅ Update documentation
+- ✅ Use conventional commits
+
+---
+
+## 🔒 Security
 
 This is experimental software. Use at your own risk.
 
-For security issues, please email: security@example.com
+**Best Practices**:
+- Never expose private keys
+- Test thoroughly on testnet
+- Audit smart contracts before mainnet
+- Use hardware wallets for production
 
-## License
-
-MIT License - see LICENSE file for details
-
-## Acknowledgments
-
-Built with:
-- [Zama FHEVM](https://www.zama.ai/) - Fully Homomorphic Encryption
-- [fhevmjs](https://github.com/zama-ai/fhevmjs) - JavaScript library
-- [Ethers.js](https://ethers.org/) - Ethereum library
-- [React](https://react.dev/) - UI framework
-- [Next.js](https://nextjs.org/) - React framework
-
-## Contact
-
-- Documentation: [docs.zama.ai/fhevm](https://docs.zama.ai/fhevm)
-- Discord: [Zama Discord](https://discord.gg/zama)
-- Twitter: [@zama_fhe](https://twitter.com/zama_fhe)
+For security issues, please open a GitHub issue.
 
 ---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2024 FHEVM Community
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files...
+```
+
+---
+
+## 🏆 Acknowledgments
+
+### Built With
+- 🎯 **[Zama FHEVM](https://www.zama.ai/)** - Fully Homomorphic Encryption technology
+- 📚 **[fhevmjs](https://github.com/zama-ai/fhevmjs)** - JavaScript FHE library
+- 🔗 **[Ethers.js](https://ethers.org/)** - Ethereum library
+- ⚛️ **[React](https://react.dev/)** - UI framework
+- ⚡ **[Next.js](https://nextjs.org/)** - React framework
+
+### Special Thanks
+- Zama team for pioneering FHE on blockchain
+- Ethereum community for development tools
+- Open source contributors
+
+---
+
+## 🌐 Links
+
+- 🔗 **GitHub**: [https://github.com/KennedyQuitzon/fhevm-react-template](https://github.com/KennedyQuitzon/fhevm-react-template)
+- 🌐 **Live Demo**: [https://fhe-rehab-records.vercel.app/](https://fhe-rehab-records.vercel.app/)
+- 📖 **Documentation**: [docs.zama.ai/fhevm](https://docs.zama.ai/fhevm)
+- 💬 **Discord**: [Zama Discord](https://discord.gg/zama)
+- 🐦 **Twitter**: [@zama_fhe](https://twitter.com/zama_fhe)
+
+---
+
+## 📞 Support
+
+### Get Help
+- 📧 **Issues**: [GitHub Issues](https://github.com/KennedyQuitzon/fhevm-react-template/issues)
+- 📖 **Documentation**: [./docs/](./docs/)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/KennedyQuitzon/fhevm-react-template/discussions)
+
+---
+
+<div align="center">
 
 **Made with ❤️ for the FHEVM community**
 
 *Privacy is not optional, it's a fundamental right.*
+
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/KennedyQuitzon/fhevm-react-template) • [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://fhe-rehab-records.vercel.app/)
+
+</div>
