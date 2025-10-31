@@ -1,15 +1,23 @@
-# Next.js FHEVM SDK Demo
+# Next.js FHEVM Demo
 
-Interactive demonstration of FHEVM SDK integration with Next.js.
+A comprehensive Next.js example demonstrating integration with the FHEVM SDK for privacy-preserving decentralized applications.
+
+## Overview
+
+This example showcases how to integrate the FHEVM SDK into a Next.js application using the App Router. It demonstrates encryption, decryption, and homomorphic computation on encrypted data.
 
 ## Features
 
-- Wallet connection (MetaMask)
-- FHEVM client initialization
-- Value encryption with FHE
-- Real-time status updates
-- Responsive UI with Tailwind CSS
-- TypeScript support
+- 🔐 **FHE Encryption**: Encrypt values using Fully Homomorphic Encryption
+- 🔓 **Secure Decryption**: Decrypt encrypted data with permission checks
+- ⚡ **Homomorphic Computation**: Perform calculations on encrypted data
+- 🔑 **Key Management**: Manage FHE public keys
+- 🎨 **Modern UI**: Beautiful interface with Tailwind CSS
+- 📱 **Responsive Design**: Works on desktop and mobile
+- 🔌 **Wallet Integration**: MetaMask support
+- 🧩 **Reusable Components**: Modular component architecture
+- 🪝 **Custom Hooks**: React hooks for FHE operations
+- 📝 **TypeScript**: Full type safety throughout
 
 ## Setup
 
@@ -57,21 +65,56 @@ Wait for the status to show "✅ Ready".
 - Click "🔒 Encrypt Value"
 - The encrypted data will be displayed below
 
-## Code Structure
+## Project Structure
 
 ```
 nextjs-demo/
 ├── src/
-│   ├── app/
-│   │   ├── layout.tsx       # Root layout
-│   │   ├── page.tsx         # Main demo page
-│   │   └── globals.css      # Global styles
-│   └── components/          # Reusable components (if any)
-├── package.json
-├── tsconfig.json
-├── next.config.js
-├── tailwind.config.js
-└── README.md
+│   ├── app/                        # Next.js App Router
+│   │   ├── layout.tsx              # Root layout
+│   │   ├── page.tsx                # Main page
+│   │   ├── globals.css             # Global styles
+│   │   └── api/                    # API routes
+│   │       ├── fhe/
+│   │       │   ├── route.ts             # FHE operations
+│   │       │   ├── encrypt/route.ts     # Encryption API
+│   │       │   ├── decrypt/route.ts     # Decryption API
+│   │       │   └── compute/route.ts     # Computation API
+│   │       └── keys/route.ts            # Key management API
+│   │
+│   ├── components/                 # React components
+│   │   ├── ui/                     # Base UI components
+│   │   │   ├── Button.tsx          # Button component
+│   │   │   ├── Input.tsx           # Input component
+│   │   │   └── Card.tsx            # Card component
+│   │   └── fhe/                    # FHE components
+│   │       ├── FHEProvider.tsx     # FHE context provider
+│   │       ├── EncryptionDemo.tsx  # Encryption demo
+│   │       ├── ComputationDemo.tsx # Computation demo
+│   │       └── KeyManager.tsx      # Key management
+│   │
+│   ├── lib/                        # Utility libraries
+│   │   ├── fhe/                    # FHE integration
+│   │   │   ├── client.ts           # Client-side FHE operations
+│   │   │   ├── server.ts           # Server-side FHE operations
+│   │   │   ├── keys.ts             # Key management
+│   │   │   └── types.ts            # Type definitions
+│   │   └── utils/                  # Utilities
+│   │       ├── security.ts         # Security helpers
+│   │       └── validation.ts       # Validation helpers
+│   │
+│   ├── hooks/                      # Custom React hooks
+│   │   ├── useFHE.ts               # FHE client hook
+│   │   ├── useEncryption.ts        # Encryption hook
+│   │   └── useComputation.ts       # Computation hook
+│   │
+│   └── types/                      # TypeScript types
+│       ├── fhe.ts                  # FHE-related types
+│       └── api.ts                  # API types
+│
+├── package.json                    # Dependencies
+├── tsconfig.json                   # TypeScript config
+└── README.md                       # This file
 ```
 
 ## Key Integration Points
