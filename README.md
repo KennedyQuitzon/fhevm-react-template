@@ -78,8 +78,8 @@ npm run build:sdk
 # Start Next.js demo
 npm run dev:next
 
-# Start Healthcare app
-npm run dev:healthcare
+# Start Private Rehab Records app
+npm run dev:rehab
 ```
 
 ### Compile Smart Contracts
@@ -153,13 +153,20 @@ fhevm-react-template/
 │       │   ├── hooks/          # React hooks
 │       │   └── utils/          # Utilities
 │       └── README.md
-├── examples/
-│   ├── nextjs-demo/            # Next.js integration example
-│   ├── healthcare-app/         # Full healthcare dApp example
-│   ├── react-demo/             # React integration example (planned)
-│   └── nodejs-demo/            # Node.js backend example (planned)
+├── examples/                   # Example applications
+│   ├── nextjs-demo/            # Next.js integration example ✅
+│   ├── PrivateRehabRecords/    # Full healthcare dApp example ✅
+│   ├── react-demo/             # React integration (planned)
+│   └── nodejs-demo/            # Node.js backend (planned)
+├── templates/                  # Symlink to examples/
 ├── docs/                       # Documentation
+│   ├── README.md               # Docs overview
+│   ├── installation.md         # Installation guide
+│   ├── architecture.md         # Architecture details
+│   └── fhe-basics.md           # FHE fundamentals
 ├── package.json                # Monorepo configuration
+├── QUICK_START.md              # Quick start guide
+├── DEMO_SCRIPT.md              # Demo script
 └── README.md                   # This file
 ```
 
@@ -336,7 +343,7 @@ await retry(() => someOperation(), 3, 1000);
 
 Interactive demo showcasing SDK integration with Next.js.
 
-**Location**: `examples/nextjs-demo/`
+**Location**: `examples/nextjs-demo/` (also accessible via `templates/nextjs-demo/`)
 
 **Features**:
 - Wallet connection (MetaMask)
@@ -345,6 +352,53 @@ Interactive demo showcasing SDK integration with Next.js.
 - Real-time status updates
 - Responsive UI with Tailwind CSS
 - TypeScript throughout
+- Complete FHE operations API
+- Reusable UI components
+- Custom React hooks for FHE
+- Comprehensive type definitions
+
+**Structure**:
+```
+nextjs-demo/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── layout.tsx          # Root layout
+│   │   ├── page.tsx            # Main page
+│   │   ├── globals.css         # Global styles
+│   │   └── api/                # API routes
+│   │       ├── fhe/
+│   │       │   ├── route.ts         # General FHE operations
+│   │       │   ├── encrypt/route.ts # Encryption API
+│   │       │   ├── decrypt/route.ts # Decryption API
+│   │       │   └── compute/route.ts # Computation API
+│   │       └── keys/route.ts        # Key management
+│   ├── components/             # React components
+│   │   ├── ui/                 # Base UI components
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   └── Card.tsx
+│   │   └── fhe/                # FHE components
+│   │       ├── FHEProvider.tsx
+│   │       ├── EncryptionDemo.tsx
+│   │       ├── ComputationDemo.tsx
+│   │       └── KeyManager.tsx
+│   ├── lib/                    # Utility libraries
+│   │   ├── fhe/                # FHE integration
+│   │   │   ├── client.ts
+│   │   │   ├── server.ts
+│   │   │   ├── keys.ts
+│   │   │   └── types.ts
+│   │   └── utils/              # Utilities
+│   │       ├── security.ts
+│   │       └── validation.ts
+│   ├── hooks/                  # Custom hooks
+│   │   ├── useFHE.ts
+│   │   ├── useEncryption.ts
+│   │   └── useComputation.ts
+│   └── types/                  # Type definitions
+│       ├── fhe.ts
+│       └── api.ts
+```
 
 **Run**:
 ```bash
@@ -355,13 +409,13 @@ npm run dev:next
 
 ---
 
-### Example 2: Healthcare Records dApp (Full Example)
+### Example 2: Private Rehabilitation Records dApp (Full Example)
 
-Full-featured healthcare dApp with encrypted medical records.
+Full-featured rehabilitation records dApp with encrypted medical data built with React and Vite.
 
 **Live Demo**: [https://fhe-rehab-records.vercel.app/](https://fhe-rehab-records.vercel.app/)
 
-**Location**: `examples/healthcare-app/`
+**Location**: `examples/PrivateRehabRecords/`
 
 **Features**:
 - Smart contract with FHE encryption
@@ -373,10 +427,10 @@ Full-featured healthcare dApp with encrypted medical records.
 
 **Run**:
 ```bash
-npm run dev:healthcare
+npm run dev:rehab
 ```
 
-**Learn More**: [Healthcare App Guide](./examples/healthcare-app/README.md)
+**Learn More**: [Private Rehab Records Guide](./examples/PrivateRehabRecords/README.md)
 
 ---
 
@@ -449,7 +503,7 @@ npm run clean
 
 ### Example Guides
 - 🎯 **[Next.js Demo Guide](./examples/nextjs-demo/README.md)** - Next.js integration
-- 🏥 **[Healthcare App Guide](./examples/healthcare-app/README.md)** - Full dApp example
+- 🏥 **[Private Rehab Records Guide](./examples/PrivateRehabRecords/README.md)** - Full dApp example
 
 ### External Resources
 - 🔗 **[Zama FHEVM Documentation](https://docs.zama.ai/fhevm)** - Official FHEVM docs
